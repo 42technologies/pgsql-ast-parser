@@ -20,12 +20,7 @@ function name<T extends Name>(nm: NoExtraProperties<Name, T>) {
 }
 
 function ident(nm: string) {
-    // only add quotes if has upper cases, or if it is a keyword.
-    const low = nm.toLowerCase();
-    if (low === nm && !kwSet.has(low) && /^[a-z][a-z0-9_]*$/.test(low)) {
-        return nm;
-    }
-    return '"' + nm + '"';
+    return nm;
 }
 
 function list<T>(elems: T[], act: (e: T) => any, addParen: boolean) {
@@ -1335,6 +1330,7 @@ const visitor = astVisitor<IAstFullVisitor>(m => ({
         visitQualifiedName(r);
         if (r.alias) {
             ret.push(' AS ', ident(r.alias));
+            ret.push(' ');
         }
         ret.push(' ');
     },
